@@ -5,7 +5,7 @@ function App() {
 
   return (
     <>
-     Wisoft Lab
+     <p>Wisoft Lab</p>
     </>
   )
 }
