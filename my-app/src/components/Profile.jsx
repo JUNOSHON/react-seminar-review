@@ -1,11 +1,13 @@
+import Avatar from "./Avatar";
 
-
-export default function Profile({image, name, title}) {
+export default function Profile({image, name, title, isNew}) {
+  
+  
   return (
     <div className="profile">
-      <img src={image} alt="avatar" className="photo"/>
+      <Avatar image={image} isNew={isNew}/>
       <h1>{name}</h1>
       <p>{title}</p>
     </div>
-)
+  );
 }
