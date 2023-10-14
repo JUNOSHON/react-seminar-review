@@ -28,5 +28,5 @@
     content: '';
     display: block;
     margin-top: 0.2rem;
-    border: 1px solid var(--color-text);
+    border: 2px solid var(--color-text);
 }
