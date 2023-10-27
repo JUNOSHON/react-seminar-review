@@ -6,6 +6,7 @@ import CartItem from "../components/CartItem";
 import {BsFillPlusCircleFill} from "react-icons/bs";
 import {FaEquals} from "react-icons/fa";
 import PriceCart from "../components/PriceCard";
+import Button from "../components/ui/Button";
 
 export default function MyCart() {
   const {uid} = useAuthContext();
@@ -19,22 +20,23 @@ export default function MyCart() {
   const hasProducts = products && products.length > 0;
   const totalPrice = products && products.reduce((prev, cur) => prev + parseInt(cur.price) * cur.quantity, 0);
   return (
-    <section>
-      <p>장바구니</p>
+    <section className="p-8 flex flex-col">
+      <p className="text-2xl text-center font-bold pb-4 border-b border-gray-300">장바구니</p>
       {!hasProducts && <p>장바구니에 상품이 없음.</p>}
       {hasProducts && <>
-        <ul>
+        <ul className="border-b border-gray-300 mb-8 p-4 px-8">
           {products && products.map((product) => (
-            <CartItem key={product.id} product={product}/>
+            <CartItem key={product.id} product={product} uid={uid}/>
           ))}
         </ul>
-        <div>
+        <div className="flex justify-between items-center mb-6 px-2 md:p-8 lg:px-16">
           <PriceCart text="상품 총액" price={totalPrice}/>
-          <BsFillPlusCircleFill/>
+          <BsFillPlusCircleFill className="shrink-0"/>
           <PriceCart text="배송액" price={SHIPPING}/>
-          <FaEquals/>
+          <FaEquals className="shrink-0"/>
           <PriceCart text="총 가격" price={totalPrice + SHIPPING}/>
         </div>
+        <Button text="주문하기"></Button>
       </>
       
       }
