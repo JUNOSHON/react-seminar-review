@@ -1,19 +1,15 @@
-import React, {useEffect, useState} from "react";
 import {Link} from "react-router-dom";
 import {FiShoppingBag} from "react-icons/fi";
 import {BsFillPencilFill} from "react-icons/bs";
-import {login, logout, onUserStateChange} from "../api/firebase";
 import User from "./User";
+import Button from "./ui/Button";
+import {useAuthContext} from "../context/AuthContext";
+import CartStatus from "./ui/CartStatus";
+
 
 export default function Navbar() {
-  const [user, setUser] = useState();
   
-  useEffect(() => { //컴포넌트가 마운트 될 때 사용자 상태가 어떤지 판단해서 user 상태에 넣어줌
-    onUserStateChange(user => {
-      console.log(user);
-      setUser(user);
-    });
-  }, []);
+  const {user, login, logout} = useAuthContext();
   
   return (
     <header className="flex justify-between border-b border-gray-300 p-4">
@@ -23,13 +19,20 @@ export default function Navbar() {
       </Link>
       <nav className="flex items-center gap-4 font-semibold">
         <Link to="/products">Products</Link>
-        <Link to="/carts">Carts</Link>
-        <Link to="/products/new" className="text-2xl">
+        
+        {user && user.isAdmin && (
+          <Link to="/carts"><CartStatus/></Link>
+        )}
+        {user && user.isAdmin && (
+          <Link to="/products/new" className="text-2xl">
           <BsFillPencilFill/>
-        </Link>
+          </Link>
+          )}
+        
+        
         {user && <User user={user}/>}
-        {user ? <button onClick={logout}>Logout</button> : <button onClick={login}>Login</button>}
-      </nav>
-    </header>
-  );
-}
+        {user ? <Button onClick={logout} text={"Logout"} /> : <Button onClick={login} text={"Login"}/>}
+          </nav>
+          </header>
+          );
+        }
